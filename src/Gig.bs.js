@@ -2,31 +2,73 @@
 'use strict';
 
 var Char = require("bs-platform/lib/js/char.js");
+var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 var Pervasives = require("bs-platform/lib/js/pervasives.js");
 var Rng$Gridironglory = require("./Rng.bs.js");
 
-var sb_001 = /* teams : array */[
-  "Virginia Beach",
-  "Houston"
+var citypool = /* array */[
+  "New York",
+  "Los Angeles",
+  "Chicago",
+  "Dallas",
+  "Houston",
+  "Washington",
+  "Miami",
+  "Philadelphia",
+  "Atlanta",
+  "Boston",
+  "Phoenix",
+  "San Francisco",
+  "Riverside",
+  "Detroit",
+  "Seattle",
+  "Minneapolis",
+  "San Diego",
+  "Tampa",
+  "Denver",
+  "Baltimore",
+  "St. Louis",
+  "Charlotte",
+  "Orlando",
+  "San Antonio",
+  "Portland",
+  "Pittsburgh",
+  "Sacramento",
+  "Las Vegas",
+  "Cincinnati",
+  "Kansas City",
+  "Austin",
+  "Columbus"
 ];
 
-var sb_002 = /* score : array */[
-  0,
-  0
-];
+function draw2Cities(param) {
+  var shuffled = Belt_Array.shuffle(citypool);
+  return /* tuple */[
+          Caml_array.caml_array_get(shuffled, 0),
+          Caml_array.caml_array_get(shuffled, 1)
+        ];
+}
 
-var sb = /* record */[
-  /* gameover */false,
-  sb_001,
-  sb_002,
-  /* poss */0,
-  /* half */0,
-  /* playcount */0,
-  /* los */20,
-  /* down */1,
-  /* ytg */10
-];
+function initScoreboard(vteam, hteam) {
+  return /* record */[
+          /* gameover */false,
+          /* teams : array */[
+            vteam,
+            hteam
+          ],
+          /* score : array */[
+            0,
+            0
+          ],
+          /* poss */0,
+          /* half */0,
+          /* playcount */0,
+          /* los */20,
+          /* down */1,
+          /* ytg */10
+        ];
+}
 
 function generatePlayMatrix(diceroll) {
   switch (diceroll) {
@@ -309,7 +351,8 @@ function tickPlayClock(sb) {
   
 }
 
-function kickoff(param) {
+function kickoff(vteam, hteam) {
+  var sb = initScoreboard(vteam, hteam);
   var _sb = sb;
   while(true) {
     var sb$1 = _sb;
@@ -328,12 +371,20 @@ function kickoff(param) {
   };
 }
 
-var resultboard = kickoff(/* () */0);
+var match = draw2Cities(/* () */0);
+
+var hteam = match[1];
+
+var vteam = match[0];
+
+var resultboard = kickoff(vteam, hteam);
 
 var playsPerHalf = 24;
 
+exports.citypool = citypool;
+exports.draw2Cities = draw2Cities;
 exports.playsPerHalf = playsPerHalf;
-exports.sb = sb;
+exports.initScoreboard = initScoreboard;
 exports.generatePlayMatrix = generatePlayMatrix;
 exports.tallySafety = tallySafety;
 exports.downCheck = downCheck;
@@ -344,5 +395,7 @@ exports.resolvePlayMatrix = resolvePlayMatrix;
 exports.advanceBall = advanceBall;
 exports.tickPlayClock = tickPlayClock;
 exports.kickoff = kickoff;
+exports.vteam = vteam;
+exports.hteam = hteam;
 exports.resultboard = resultboard;
-/* resultboard Not a pure module */
+/* match Not a pure module */
