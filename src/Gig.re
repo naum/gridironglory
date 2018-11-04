@@ -129,16 +129,19 @@ let tickPlayClock = (sb) => {
     };
 };
 
-let rec whistle = (sb) => {
-    let pm = generatePlayMatrix(Rng.rollDice());
-    Js.log4("!!", Char.escaped(fst(pm)), snd(pm), "!!");
-    let newboard = resolvePlayMatrix(pm, sb);
-    let newboard = tickPlayClock(newboard);
-    Js.log4("@@", newboard.playcount, "@@", newboard);
-    switch (newboard.gameover) {
-        | true => newboard
-        | _ => whistle(newboard)
+let kickoff = () => {
+    let rec whistle = (sb) => {
+        let pm = generatePlayMatrix(Rng.rollDice());
+        Js.log4("!!", Char.escaped(fst(pm)), snd(pm), "!!");
+        let newboard = resolvePlayMatrix(pm, sb);
+        let newboard = tickPlayClock(newboard);
+        Js.log4("@@", newboard.playcount, "@@", newboard);
+        switch (newboard.gameover) {
+            | true => newboard
+            | _ => whistle(newboard)
+        }
     }
+    whistle(sb);
 }
 
-let finalboard = whistle(sb);
+let resultboard = kickoff();
