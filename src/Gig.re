@@ -178,14 +178,26 @@ let tickPlayClock = sb => {
   };
 };
 
+let displayPlayResult = (pm, sb) => {
+  let (pc, yg) = pm;
+  Printf.sprintf(
+    "%2d %2d %-12s %3d %2d %2d   %c %3d", 
+    sb.half, sb.playcount, sb.teams[sb.poss], sb.los, sb.down, sb.ytg, pc, yg
+    ) |> Js.log
+}
+
+let displayScore = (sb) => {
+  Js.log4(sb.teams[0], sb.score[0], sb.teams[1], sb.score[1]);
+}
+
 let kickoff = (vteam, hteam) => {
   let sb = initScoreboard(vteam, hteam);
   let rec whistle = sb => {
     let pm = generatePlayMatrix(Rng.rollDice());
-    Js.log4("!!", Char.escaped(fst(pm)), snd(pm), "!!");
+    displayPlayResult(pm, sb);
     let newboard = resolvePlayMatrix(pm, sb);
     let newboard = tickPlayClock(newboard);
-    Js.log4("@@", newboard.playcount, "@@", newboard);
+    displayScore(newboard);
     switch (newboard.gameover) {
     | true => newboard
     | _ => whistle(newboard)
