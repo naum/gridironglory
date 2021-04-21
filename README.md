@@ -4,6 +4,8 @@ A wooden peg football dice simulation endeavor.
 
 ## Dice Roll Play Chart
 
+| # | Play Result |
+| ---- | -------- |
 | 2 | Touchdown Pass |
 | 3 | Interception +10 Yards, Lose Ball |
 | 4 | +20 Yard Gain on Reverse |
