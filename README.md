@@ -4,7 +4,7 @@ A wooden peg football dice simulation endeavor.
 
 ## Dice Roll Play Chart
 
-| # | Play Result |
+| Roll | Play Result |
 | ---- | -------- |
 | 2 | Touchdown Pass |
 | 3 | Interception +10 Yards, Lose Ball |
@@ -18,5 +18,7 @@ A wooden peg football dice simulation endeavor.
 | 11 | Fumble, Lose Ball |
 | 12 | +30 Yard Complete Pass |
 
+| Kicking | Play Result |
+| ---- | ---- |
 | Punt | Roll Die & Multiply by 10 |
 | Extra Point | Roll 5-12  Good, 2-4 No Good |
